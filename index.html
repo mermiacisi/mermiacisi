@@ -10,3 +10,56 @@
 mermiacisi/mermiacisi is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
 --->
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mermi Açısı ve Mesafe Hesaplama</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    <h1><i class="fas fa-bullseye"></i> Mermi Açısı ve Mesafe Hesaplama</h1>
+    
+    <form id="hesapFormu">
+      <label for="kisa">Kısa Kenar (cm):</label>
+      <input type="number" id="kisa" step="0.01" required>
+
+      <label for="uzun">Uzun Kenar (cm):</label>
+      <input type="number" id="uzun" step="0.01" required>
+
+      <label for="yukseklik">Yükseklik (cm):</label>
+      <input type="number" id="yukseklik" step="0.1" required>
+
+      <button type="submit"><i class="fas fa-calculator"></i> Hesapla</button>
+    </form>
+
+    <div id="sonuc">
+      <p><i class="fas fa-angle-double-right"></i> Açı: <span id="aciSonuc"></span></p>
+      <p><i class="fas fa-ruler-combined"></i> Hipotenüs: <span id="hipoSonuc"></span></p>
+      <p><i class="fas fa-arrows-alt-h"></i> Yatay Mesafe: <span id="yataySonuc"></span></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("hesapFormu").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const kisa = parseFloat(document.getElementById("kisa").value);
+      const uzun = parseFloat(document.getElementById("uzun").value);
+      const yukseklik = parseFloat(document.getElementById("yukseklik").value) / 100; // metreye çevir
+
+      const oran = kisa / uzun;
+      const aci = Math.asin(oran) * (180 / Math.PI);
+      const hipo = yukseklik / Math.cos(aci * Math.PI / 180);
+      const yatay = Math.sqrt(hipo**2 - yukseklik**2);
+
+      document.getElementById("aciSonuc").textContent = aci.toFixed(2) + "°";
+      document.getElementById("hipoSonuc").textContent = hipo.toFixed(2) + " m";
+      document.getElementById("yataySonuc").textContent = yatay.toFixed(2) + " m";
+    });
+  </script>
+</body>
+</html>
